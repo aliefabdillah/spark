@@ -179,6 +179,12 @@ export default function Home() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSubmit(); // Memicu fungsi klik tombol
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-purpleCustom">
       <h1 className="text-8xl font-bold text-white font-jakarta">sparks</h1>
@@ -195,6 +201,7 @@ export default function Home() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="input input-bordered join-item w-full rounded-l-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
             placeholder="Type your question here..."
           />
