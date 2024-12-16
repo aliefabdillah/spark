@@ -89,7 +89,7 @@ export default function VictoryPage() {
             {/* Back Button */}
             <button
               onClick={() => window.history.back()}
-              className="bg-white hover:bg-gray-200 text-black text-sm font-medium font-jakarta py-2 px-4 rounded-lg mt-6 w-full"
+              className="btn bg-white hover:bg-gray-200 text-black text-sm font-medium font-jakarta py-2 px-4 rounded-lg mt-6 w-full"
             >
               Back
             </button>
