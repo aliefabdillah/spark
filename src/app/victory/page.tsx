@@ -20,6 +20,7 @@ export default function VictoryPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const pathname = usePathname();
   const [direction, setDirection] = useState(0);
+  const queryQuestion = localStorage.getItem("query");
   const handleSuggestionClick = (questionTitle: String) => {
     const index = suggestionQuestions.findIndex(
       (q) => q.words === questionTitle
@@ -29,6 +30,7 @@ export default function VictoryPage() {
       setCurrentQuestion(index);
     }
   };
+
   return (
     <div className="min-h-screen bg-purpleCustom flex flex-col justify-between text-center px-4 py-8">
       {/* Wrapper for container and header */}
@@ -36,7 +38,7 @@ export default function VictoryPage() {
         {/* Header Section */}
         <div className="flex flex-col items-start">
           <h1 className="text-white text-4xl font-bold font-jakarta">sparks</h1>
-          <p className="text-sm text-gray-300 mt-1 font-jakarta">GMO</p>
+          <p className="text-sm text-gray-300 mt-1 font-jakarta">{queryQuestion || "sparks-prompt"}</p>
         </div>
       </div>
 
@@ -80,7 +82,7 @@ export default function VictoryPage() {
             </h2>
             <p className="text-gray-600 mt-2">
               You&apos;ve conquered{" "}
-              <span className="font-bold text-purpleCustom">GMO</span> like a
+              <span className="font-bold text-purpleCustom">{queryQuestion || "sparks-prompt"}</span> like a
               true champion!
             </p>
 
