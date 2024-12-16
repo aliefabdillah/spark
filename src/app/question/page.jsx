@@ -300,7 +300,11 @@ export default function QuestionPage() {
   return (
     <div className="min-h-screen flex flex-col items-center bg-purpleCustom p-4">
       <div className="w-full max-w-md">
-        <p className="text-2xl font-bold text-white font-jakarta p-4">sparks</p>
+        <div className="p-6">
+            {/* Header Section */}
+            <h1 className="text-white text-4xl font-bold font-jakarta">sparks</h1>
+            <p className="text-sm text-gray-300 mt-1 font-jakarta">GMO</p>
+        </div>
         <AnimatePresence custom={direction} mode="wait">
           <motion.div
             key={currentQuestion}
