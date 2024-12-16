@@ -176,67 +176,67 @@
 // import { useRouter } from 'next/navigation';
 "use client";
 
-const questions = [
-  {
-    id: 1,
-    title: "What is Genetic Modification?",
-    description:
-      "Understanding genetic modification is essential because it forms the foundation of GMOs. By grasping how genetic material can be altered, you can better comprehend how GMOs are created and their potential effects.",
-    explanation:
-      "Genetic modification alters an organism's DNA to add or improve traits like pest resistance or faster growth. Using tools like CRISPR, scientists precisely replace parts of DNA, making the process faster and more accurate than traditional breeding.Genetic modification alters an organism's DNA to add or improve traits like pest resistance or faster growth. Using tools like CRISPR, scientists precisely replace parts of DNA, making the process faster and more accurate than traditional breeding.Genetic modification alters an organism's DNA to add or improve traits like pest resistance or faster growth. Using tools like CRISPR, scientists precisely replace parts of DNA, making the process faster and more accurate than traditional breeding.Genetic modification alters an organism's DNA to add or improve traits like pest resistance or faster growth. Using tools like CRISPR, scientists precisely replace parts of DNA, making the process faster and more accurate than traditional breeding.",
-    next: "How Are GMOs Created?",
-    topic: "GMO",
-  },
-  {
-    id: 2,
-    title: "How Are GMOs Created?",
-    description:
-      "GMOs are created through genetic engineering, a process that introduces desired traits into an organism's genome.",
-    explanation: [
-      "Scientists identify traits of interest.",
-      "Genes responsible for those traits are isolated.",
-      "The genes are inserted into the target organism's genome using techniques like CRISPR or gene guns.",
-    ],
-    next: "Why Are GMOs Used?",
-    topic: "GMO Creation",
-  },
-  {
-    id: 3,
-    title: "Why Are GMOs Used?",
-    description:
-      "GMOs offer solutions to global challenges, especially in agriculture and medicine.",
-    explanation: [
-      "Increased crop yields and pest resistance.",
-      "Production of life-saving medications like insulin.",
-      "Reduced need for chemical pesticides, promoting sustainability.",
-    ],
-    next: "Are GMOs Safe?",
-    topic: "GMO Benefits",
-  },
-  {
-    id: 4,
-    title: "Are GMOs Safe?",
-    description:
-      "Scientific consensus holds that GMOs are as safe as their non-GMO counterparts when properly tested.",
-    explanation:
-      "Rigorous safety assessments are performed before GMOs are released into the market. These evaluations ensure they pose no harm to humans, animals, or the environment.",
-    next: "What Are the Ethical Concerns of GMOs?",
-    topic: "GMO Safety",
-  },
-  {
-    id: 5,
-    title: "What Are the Ethical Concerns of GMOs?",
-    description:
-      "Ethical concerns revolve around ownership, environmental impact, and public health.",
-    explanation: [
-      "Potential monopolization of seed supply by corporations.",
-      "Unintended ecological consequences like reduced biodiversity.",
-      "Debates over labeling and consumer choice.",
-    ],
-    next: null,
-    topic: "Ethics of GMOs",
-  },
-];
+// const questions = [
+//   {
+//     id: 1,
+//     title: "What is Genetic Modification?",
+//     description:
+//       "Understanding genetic modification is essential because it forms the foundation of GMOs. By grasping how genetic material can be altered, you can better comprehend how GMOs are created and their potential effects.",
+//     explanation:
+//       "Genetic modification alters an organism's DNA to add or improve traits like pest resistance or faster growth. Using tools like CRISPR, scientists precisely replace parts of DNA, making the process faster and more accurate than traditional breeding.Genetic modification alters an organism's DNA to add or improve traits like pest resistance or faster growth. Using tools like CRISPR, scientists precisely replace parts of DNA, making the process faster and more accurate than traditional breeding.Genetic modification alters an organism's DNA to add or improve traits like pest resistance or faster growth. Using tools like CRISPR, scientists precisely replace parts of DNA, making the process faster and more accurate than traditional breeding.Genetic modification alters an organism's DNA to add or improve traits like pest resistance or faster growth. Using tools like CRISPR, scientists precisely replace parts of DNA, making the process faster and more accurate than traditional breeding.",
+//     next: "How Are GMOs Created?",
+//     topic: "GMO",
+//   },
+//   {
+//     id: 2,
+//     title: "How Are GMOs Created?",
+//     description:
+//       "GMOs are created through genetic engineering, a process that introduces desired traits into an organism's genome.",
+//     explanation: [
+//       "Scientists identify traits of interest.",
+//       "Genes responsible for those traits are isolated.",
+//       "The genes are inserted into the target organism's genome using techniques like CRISPR or gene guns.",
+//     ],
+//     next: "Why Are GMOs Used?",
+//     topic: "GMO Creation",
+//   },
+//   {
+//     id: 3,
+//     title: "Why Are GMOs Used?",
+//     description:
+//       "GMOs offer solutions to global challenges, especially in agriculture and medicine.",
+//     explanation: [
+//       "Increased crop yields and pest resistance.",
+//       "Production of life-saving medications like insulin.",
+//       "Reduced need for chemical pesticides, promoting sustainability.",
+//     ],
+//     next: "Are GMOs Safe?",
+//     topic: "GMO Benefits",
+//   },
+//   {
+//     id: 4,
+//     title: "Are GMOs Safe?",
+//     description:
+//       "Scientific consensus holds that GMOs are as safe as their non-GMO counterparts when properly tested.",
+//     explanation:
+//       "Rigorous safety assessments are performed before GMOs are released into the market. These evaluations ensure they pose no harm to humans, animals, or the environment.",
+//     next: "What Are the Ethical Concerns of GMOs?",
+//     topic: "GMO Safety",
+//   },
+//   {
+//     id: 5,
+//     title: "What Are the Ethical Concerns of GMOs?",
+//     description:
+//       "Ethical concerns revolve around ownership, environmental impact, and public health.",
+//     explanation: [
+//       "Potential monopolization of seed supply by corporations.",
+//       "Unintended ecological consequences like reduced biodiversity.",
+//       "Debates over labeling and consumer choice.",
+//     ],
+//     next: null,
+//     topic: "Ethics of GMOs",
+//   },
+// ];
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -244,6 +244,12 @@ import { useRouter } from "next/navigation";
 import Loading from "../components/Loading";
 import ErrorQuestion from "../components/ErrorQuestion";
 import { Answer } from "../types/Answer";
+import Recommendation from "../components/Recommendation";
+
+const reccomendation = [
+  "Why is genetic modification considered precise?",
+  "How does genetic modification differ from traditional breeding?",
+]
 
 export default function QuestionPage() {
   const [questions, setQuestions] = useState<Answer[]>([]);
@@ -253,6 +259,7 @@ export default function QuestionPage() {
   const [direction, setDirection] = useState(0);
   const [error, setError] = useState("");
   const router = useRouter();
+  const queryQuestion = localStorage.getItem("query");
 
   // Ambil data dari localStorage
   useEffect(() => {
@@ -278,8 +285,6 @@ export default function QuestionPage() {
       router.push("/");
     }
   }, [router]);
-
-  console.log(questions);
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
@@ -325,7 +330,7 @@ export default function QuestionPage() {
         <div className="p-6">
           {/* Header Section */}
           <h1 className="text-white text-4xl font-bold font-jakarta">sparks</h1>
-          <p className="text-sm text-gray-300 mt-1 font-jakarta">GMO</p>
+          <p className="text-sm text-gray-300 mt-1 font-jakarta">{queryQuestion || "sparks-prompt"}</p>
         </div>
         {questions.length === 0 && (
           <div className="flex my-32 justify-center items-center">
@@ -475,6 +480,8 @@ export default function QuestionPage() {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        <Recommendation data={reccomendation} question={true} />
       </div>
     </div>
   );
