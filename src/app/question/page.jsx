@@ -320,7 +320,7 @@ export default function QuestionPage() {
             <p className="mt-2 text-slate-700 text-sm">{current.description || "No Description"}</p>
             <div className="mt-4">
               <h3 className="text-purple-600">Explanation</h3>
-              <p className="text-gray-950">{current.explanation || "No Explanation Available"}</p>
+              <p className="text-slate-900">{current.explanation || "No Explanation Available"}</p>
             </div>
             <div className="flex justify-between mt-6">
               <button
