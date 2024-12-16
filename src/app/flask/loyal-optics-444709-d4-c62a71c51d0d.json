@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "loyal-optics-444709-d4",
+  "private_key_id": "c62a71c51d0d1c22c687610b58b7199f251b3cfa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCY4L00pYKMnpNz\ns89CGwwkgo0926WJnG2OJIRtkUgQghx9VWezjX5RuYBYsFrEvUj6840XbWR9RioQ\nrZtk7wqulbCDea8JEbeKskw6Vajq+WAusU+F9CiYlTE89X0gUZaEB3wwjxPXy19t\nhJ0tBisco4o4f1niYURWMt3n9pQESj22HS9Vp6nyoneNOfvisNbw8di52TMfRt7L\nsXQt6V9AwX8/oMTSNzJjGzIV2e89FPfWI03SJaYBnU7tyD5OcW/H4QGMXOaY+vlh\nb3rApxzCq5J1gxfk/QywOBWubP9Kx0b5553k6MQRjxC2MiwdlDVcyaF89Q9eB+0S\nHxWoXaXNAgMBAAECggEAGMQnwrShbpht+MuDYwkwsWV47jF8Isv1r5ZY4cssaog5\nh1BjqWHdue2cTkHboo2rmgQEsmvlYKoSPHtzdimHiHr1iocXBRgarNxvnu+rms1l\neIr/AAtq3DUnMeHvMGInSSJRSyiSpV3sCrj2IYojR9Nym+59qD/rqy84ZdC7b+o6\n9ZxQjXGBc/peat0nfEB2BEh4aQIsmJ4a6WU0dJmwruv3TCXYmZLdbcNXm1TiE7hC\nenj/duIB4juYV4yGTXal1SP9POmb2VHltqCxj3UBbDVIevF+c1r28A6aSDnzcJqH\noHe2kgtQALMtyDDWtVehfjPTDoYpliwMXjHETBT8/QKBgQDHPqYK+bOviLOfhBS3\nwmFOZRsh3v4Nc3RAVVafxLd5v+ervVHxoepuEvjmhPIfPmwq9YvF7dP9JIghmTRa\nQI8Q41UC9+925FwFAENHJcrXY8MdpAwYrh0ghYQMUaCB4z+3X0cvWK+gCa8J4jna\nt8uJ4lJNT4r7iXpyLOOKUn4YbwKBgQDEbOv2SVZDJhwFUB5KDEx9H4nskMTgf4L2\noPuEe8ICOvtinNP0dBelv2S9XBZ75pZTVXPey53cKzHnsM9zpKKornF2Oi3PT/t/\nKDvYjahJroJ+N2+ucR60LXaQ8y5xJFp9U7RMptiR6PufpIa0D4ats2M2gspnQCyu\nLSgAYUurgwKBgGlQqxGoFRtWhaNufEj5XNfER4gqx1yyxyLuOMBwiY64Kiu0AWlY\nbYLLUnb+lMCBDUnTypLPeDsZIT+pLGv8LeL+VsQf65qLcDxQfD9SMZqSJ+M2ABLX\njZvQFxEv4Ehnpxk1KnpTRVmxZK0zv+LlPZffYiNtRQhaDbfmFEvb+LzPAoGBAIGj\nueCk6nALGPdQt4z7rQfv5uHhcm8Q+Wi5OwdnftZmA0BEbYerj2fveBeaTaScvZ5m\nicED9j43rApUobabdFeMOopjP5TSHxT/gvAcHnPy32FaSTWCp1cXomdseLxn1+lb\nc2YbwFgcwuXMerMghCzkdpilndyjeFnEp+AIVx7tAoGAQVqt8kNKdDq6c1TU4/hU\nF1n64prsKfTbRllyDQD1FBRBko+BzUZpAoQ0v6C2XpcjBGnht0izYWs7mOPIa7U/\ntpi7bk+nBv3pDO2ad09rZdMoNFHWPF/S5EfyQuiwHpD6fAuYZjHStyXpHgrFUPOp\nKe4JhnSnIi6ymicltE6ig7c=\n-----END PRIVATE KEY-----\n",
+  "client_email": "fajr1mm-285@loyal-optics-444709-d4.iam.gserviceaccount.com",
+  "client_id": "115073175630097499348",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fajr1mm-285%40loyal-optics-444709-d4.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
