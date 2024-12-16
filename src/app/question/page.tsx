@@ -243,9 +243,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Loading from "../components/Loading";
 import ErrorQuestion from "../components/ErrorQuestion";
+import { Answer } from "../types/Answer";
 
 export default function QuestionPage() {
-  // const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState<Answer[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [progress, setProgress] = useState(20);
   const [page, setPage] = useState(1);
@@ -255,26 +256,30 @@ export default function QuestionPage() {
 
   // Ambil data dari localStorage
   useEffect(() => {
-    // const storedQuestions = localStorage.getItem("questions");
+    const storedQuestions = localStorage.getItem("questions");
     try {
-      // if (storedQuestions) {
-      //   const parsedQuestions = JSON.parse(storedQuestions);
-      //   if (Array.isArray(parsedQuestions) && parsedQuestions.length > 0) {
-      //     setQuestions(parsedQuestions);
-      //   } else {
-      //     setError("Data tidak valid. Pastikan backend mengirimkan format JSON yang benar.");
-      //     router.push("/");
-      //   }
-      // } else {
-      //   setError("Tidak ada data ditemukan. Silakan ajukan pertanyaan lagi.");
-      //   router.push("/");
-      // }
+      if (storedQuestions) {
+        const parsedQuestions: any = JSON.parse(storedQuestions);
+        if (Array.isArray(parsedQuestions) && parsedQuestions.length > 0) {
+          setQuestions(parsedQuestions);
+        } else {
+          setError(
+            "Data tidak valid. Pastikan backend mengirimkan format JSON yang benar."
+          );
+          router.push("/");
+        }
+      } else {
+        setError("Tidak ada data ditemukan. Silakan ajukan pertanyaan lagi.");
+        router.push("/");
+      }
     } catch (err) {
       console.error("Failed to parse questions:", err);
       setError("Terjadi kesalahan dalam membaca data.");
       router.push("/");
     }
   }, [router]);
+
+  console.log(questions);
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
@@ -295,10 +300,12 @@ export default function QuestionPage() {
   };
 
   const handleFinish = () => {
-    router.push("/victory")
+    router.push("/victory");
   };
 
   const current = questions[currentQuestion];
+  const next = questions[currentQuestion + 1];
+  const prev = questions[currentQuestion - 1];
 
   const variants = {
     enter: (direction: number) => ({
@@ -311,14 +318,6 @@ export default function QuestionPage() {
       opacity: 0,
     }),
   };
-
-  // if (error) {
-  //   return <div className="text-red-500 text-center mt-10">{error}</div>;
-  // }
-
-  // if (questions.length === 0) {
-  //   return <div className="text-white text-center mt-10">Loading...</div>;
-  // }
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-purpleCustom p-4">
@@ -347,7 +346,7 @@ export default function QuestionPage() {
             transition={{ duration: 0.5 }}
             className="bg-white p-6 rounded-lg shadow-lg"
           >
-            {/* PROGRESS BAR CUSTOM*/}
+            {/* Progress Bar Custom */}
             <div className="flex items-center space-x-2 justify-center bg-white mb-4">
               {questions.map((_, index) => (
                 <div
@@ -370,51 +369,61 @@ export default function QuestionPage() {
               </div>
             </div>
 
-            {/* PROGRESS BAR DEFAULT */}
-            {/* <div className="flex justify-center items-center mb-6">
-              <progress
-                className="progress progress-secondary w-24"
-                value={progress}
-                max="100"
-              ></progress>
-            </div> */}
-
             <h2 className="text-2xl font-bold text-slate-800">
-              {current.title || "No Title"}
+              {current?.title || "No Title"}
             </h2>
             <p className="mt-2 text-slate-700 text-sm">
-              {current.description || "No Description"}
+              {current?.description || "No Description"}
             </p>
+
             <div className="mt-4">
               <h3 className="text-purple-600 mb-2">Explanation</h3>
               <p className="text-slate-900 leading-7">
-                {current.explanation || "No Explanation Available"}
+                {current?.explanation || "No Explanation Available"}
               </p>
             </div>
-            <div className="flex justify-between mt-6">
-              <button
-                onClick={handlePrev}
-                disabled={currentQuestion === 0}
-                className={`btn text-gray-700 ${
-                  currentQuestion === 0 && "opacity-50 cursor-not-allowed"
-                }`}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6"
+
+            <div
+              className={`flex flex-row ${
+                prev ? "justify-between space-x-2" : "justify-end"
+              } mt-6`}
+            >
+              {prev && (
+                <button
+                  onClick={handlePrev}
+                  disabled={currentQuestion === 0}
+                  className={`btn text-gray-700 h-fit py-2 w-1/2 flex justify-start ${
+                    currentQuestion === 0 && "opacity-50 cursor-not-allowed"
+                  }`}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Prev
-              </button>
+                  <div className="flex flex-col space-y-1">
+                    <div className="flex flex-row items-center justify-start">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="size-3 mr-2 fill-gray-500"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <p className="text-gray-500 font-light text-xs">Prev</p>
+                    </div>
+                    <p className="text-xs font-jakarta font-bold text-left text-clip">
+                      {prev?.title}
+                    </p>
+                  </div>
+                </button>
+              )}
+
               {currentQuestion === questions.length - 1 ? (
-                <button onClick={handleFinish} className={`btn btn-secondary hover:bg-purpleCustom hover:border-purpleCustom text-white`}>
+                <button
+                  onClick={handleFinish}
+                  className="btn btn-secondary hover:bg-purpleCustom hover:border-purpleCustom text-white"
+                >
                   Finish
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -436,25 +445,31 @@ export default function QuestionPage() {
               ) : (
                 <button
                   onClick={handleNext}
-                  // disabled={currentQuestion === questions.length - 1}
-                  className={`btn text-gray-700 ${
+                  className={`btn text-gray-700 h-fit py-2 w-1/2 flex justify-end ${
                     currentQuestion === questions.length - 1 &&
                     "opacity-50 cursor-not-allowed"
                   }`}
                 >
-                  Next
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="size-5"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <div className="flex flex-col space-y-1">
+                    <div className="flex flex-row items-center justify-end">
+                      <p className="text-gray-500 font-light text-xs">Next</p>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="size-3 ml-2 fill-gray-500"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    <p className="font-jakarta font-bold text-xs text-right text-clip">
+                      {next?.title}
+                    </p>
+                  </div>
                 </button>
               )}
             </div>
