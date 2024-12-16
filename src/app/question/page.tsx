@@ -349,7 +349,7 @@ export default function QuestionPage() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.5 }}
-            className="bg-white p-6 rounded-lg shadow-lg"
+            className="bg-white p-6 rounded-lg shadow-lg mt-8"
           >
             {/* Progress Bar Custom */}
             <div className="flex items-center space-x-2 justify-center bg-white mb-4">
