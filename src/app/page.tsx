@@ -165,6 +165,7 @@ export default function Home() {
       const data = await res.json();
       if (data.questions) {
         localStorage.setItem("questions", JSON.stringify(data.questions)); // Simpan respons di localStorage
+        localStorage.setItem("query", query)
         router.push("/question"); // Pindah ke halaman '/question'
       } else {
         setError(data.error)
