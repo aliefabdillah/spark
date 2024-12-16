@@ -109,30 +109,54 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import ErrorQuery from "./components/ErrorQuery";
+import Recommendation from "./components/Recommendation";
 
 export default function Home() {
   const router = useRouter();
   const [query, setQuery] = useState(""); // State untuk input query
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const reccomendation = [
+    "Fiscal monetary",
+    "DPR",
+  ]
 
   // Fungsi untuk mengirim query ke backend Flask
   const handleSubmit = async () => {
-    setError("")
+    setError("");
     setLoading(true);
 
-    if (!query) {  // Pastikan query tidak kosong
-      setLoading(false)
-      setError("Query cannot be empty!")
-      return
+    if (!query) {
+      // Pastikan query tidak kosong
+      setLoading(false);
+      setError("Query cannot be empty!");
+      return;
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/questions", {
+      /* TEST BE */
+      const res = await fetch("http://localhost:1337/api/answers", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      if (data.data) {
+        localStorage.setItem("questions", JSON.stringify(data.data)); // Simpan respons di localStorage
+        localStorage.setItem("query", query)
+        router.push(`/question`); // Pindah ke halaman '/question'
+      } else {
+        setError(data.error);
+        console.error("Error fetching response:", data.error);
+      }
+
+      // FIX BE
+      /* const res = await fetch("http://localhost:5000/api/questions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -145,20 +169,19 @@ export default function Home() {
       } else {
         setError(data.error)
         console.error("Error fetching response:", data.error);
-      }
+      } */
     } catch (error) {
-      setError("Failed to fetch response")
+      setError("Failed to fetch response");
       console.error("Fetch error:", error);
     } finally {
       setLoading(false);
     }
-
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-purpleCustom">
       <h1 className="text-8xl font-bold text-white font-jakarta">sparks</h1>
-      <p className="text-white text-lg font-bold mt-2 opacity-80">
+      <p className="text-white text-lg font-bold mt-5 opacity-80 mb-8">
         Ignite Your Curiosity
       </p>
 
@@ -211,9 +234,11 @@ export default function Home() {
         </div>
         {error && (
           <div className="px-2 mt-2">
-            <ErrorQuery message={error}/>
+            <ErrorQuery message={error} />
           </div>
         )}
+
+        <Recommendation data={reccomendation} question={false}/>
       </div>
       {/* <input
         type="text"
