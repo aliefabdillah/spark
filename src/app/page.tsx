@@ -41,7 +41,7 @@
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify({ query: placeholder }), // Mengirim input pengguna
 //       });
-  
+
 //       const data = await res.json();
 //       if (data.questions) {
 //         // Simpan jawaban ke localStorage agar bisa diakses di halaman berikutnya
@@ -56,7 +56,6 @@
 //       setLoading(false);
 //     }
 //   };
-  
 
 //   return (
 //     <div className="min-h-screen flex flex-col justify-center items-center bg-purpleCustom">
@@ -113,16 +112,25 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import ErrorQuery from "./components/ErrorQuery";
 
 export default function Home() {
   const router = useRouter();
   const [query, setQuery] = useState(""); // State untuk input query
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(false);
 
   // Fungsi untuk mengirim query ke backend Flask
   const handleSubmit = async () => {
-    if (!query) return; // Pastikan query tidak kosong
+    setError("")
     setLoading(true);
+
+    if (!query) {  // Pastikan query tidak kosong
+      setLoading(false)
+      setError("Query cannot be empty!")
+      return
+    }
+
     try {
       const res = await fetch("http://localhost:5000/api/questions", {
         method: "POST",
@@ -135,44 +143,95 @@ export default function Home() {
         localStorage.setItem("questions", JSON.stringify(data.questions)); // Simpan respons di localStorage
         router.push("/question"); // Pindah ke halaman '/question'
       } else {
+        setError(data.error)
         console.error("Error fetching response:", data.error);
       }
     } catch (error) {
+      setError("Failed to fetch response")
       console.error("Fetch error:", error);
     } finally {
       setLoading(false);
     }
+
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-purpleCustom">
       <h1 className="text-8xl font-bold text-white font-jakarta">sparks</h1>
-      <p className="text-white text-lg font-bold mt-2 opacity-80">Ignite Your Curiosity</p>
+      <p className="text-white text-lg font-bold mt-2 opacity-80">
+        Ignite Your Curiosity
+      </p>
 
       <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-md relative mt-6">
-        <p className="text-center text-gray-600 mb-2">I want to learn about...</p>
-        <input
-          type="text"
-          placeholder="Type your question here..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="text-gray-700 w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-        />
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          className="absolute right-5 top-16 bg-purple-600 text-white px-3 py-2 rounded-lg"
-        >
-          {loading ? "Loading..." : "Ask"}
-        </button>
+        <p className="text-center text-gray-600 mb-2">
+          I want to learn about...
+        </p>
+        <div className="relative">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="input input-bordered join-item w-full rounded-l-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+            placeholder="Type your question here..."
+          />
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={loading}
+            className="rounded-r-lg absolute inset-y-0 right-0 px-5"
+          >
+            {loading ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="size-6 fill-gray-600"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.5 12a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="size-6 fill-purple-800 hover:fill-purple-950 disabled:fill-gray-600"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M20.239 3.749a.75.75 0 0 0-.75.75V15H5.549l2.47-2.47a.75.75 0 0 0-1.06-1.06l-3.75 3.75a.75.75 0 0 0 0 1.06l3.75 3.75a.75.75 0 1 0 1.06-1.06L5.55 16.5h14.69a.75.75 0 0 0 .75-.75V4.5a.75.75 0 0 0-.75-.751Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+        {error && (
+          <div className="px-2 mt-2">
+            <ErrorQuery message={error}/>
+          </div>
+        )}
       </div>
+      {/* <input
+        type="text"
+        placeholder="Type your question here..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="text-gray-700 w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+      />
+      <button
+        onClick={handleSubmit}
+        disabled={loading}
+        className="bg-purple-600 text-white px-3 py-2 rounded-lg"
+      >
+        {loading ? "Loading..." : "Ask"}
+      </button> */}
     </div>
   );
 }
-
-
-
-
 
 // import React from "react";
 
@@ -192,7 +251,7 @@ export default function Home() {
 //           placeholder="I want to learn about...                                             ↩"
 //           className="text-grayWordCust w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
 //         />
-        
+
 //         <ul className="mt-4 space-y-2">
 //           <li className="flex items-center justify-between py-2 px-3 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200">
 //             <span className="text-grayWordCust">Fiscal monetary</span>
