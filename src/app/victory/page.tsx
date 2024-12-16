@@ -46,7 +46,7 @@ export default function VictoryPage() {
           initial={{ opacity: 0, x: 100 }} // Start off-screen to the left
           animate={{ opacity: 1, x: 0 }} // Slide in from the left to normal position
           exit={{ opacity: 0, x: 100 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="bg-white rounded-xl shadow-md p-6 w-full max-w-sm mx-auto"
         >
           {/* Card Section */}
